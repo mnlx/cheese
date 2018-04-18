@@ -1,0 +1,2 @@
+# Styleguide
+flake8==3.5.0
