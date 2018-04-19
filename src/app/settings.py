@@ -29,13 +29,14 @@ DJANGO_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
 ]
 
 THIRD_PARTY_APPS = []
 
-PROJECT_APPS = []
+PROJECT_APPS = [
+    'users',
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -81,6 +82,10 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [{
     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
 }]
+
+# Authentication
+
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 
