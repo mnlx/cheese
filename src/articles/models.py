@@ -38,7 +38,7 @@ class Category(models.Model):
 
 class Author(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to=author_avatar_path,null=True,blank=True)
+    avatar = models.ImageField(upload_to=author_avatar_path, null=True, blank=True)
     slug = AutoSlugField(populate_from=['user__first_name', 'user__last_name'])
 
     def __str__(self):
@@ -51,7 +51,7 @@ class Author(models.Model):
 
 class Article(TimeStampedModel):
     title = models.CharField(max_length=250)
-    hero = models.ImageField(upload_to=article_image_path,null=True,blank=True)
+    hero = models.ImageField(upload_to=article_image_path, null=True, blank=True)
     content = models.TextField()
 
     slug = AutoSlugField(populate_from=['publish_date', 'title'])
