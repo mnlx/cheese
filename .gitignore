@@ -11,3 +11,6 @@ local.env
 # Static and media files
 .static/
 .media/
+
+# Tests
+.pytest_cache/
