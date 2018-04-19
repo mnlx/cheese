@@ -3,8 +3,8 @@ from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseU
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password):
-        user = self.model(email=self.normalize_email(email), password=password)
+    def create_user(self, email, password, **extra_fields):
+        user = self.model(email=self.normalize_email(email), password=password, **extra_fields)
         user.set_password(password)
         user.is_staff = False
         user.is_superuser = False
