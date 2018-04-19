@@ -4,6 +4,25 @@ Backend application to manage and serve articles and related data via a RESTful 
 
 ## Contributing
 
+### Running it locally
+
+1. Clone the repository
+1. Start a Python virtualenv
+1. Install dependencies
+1. Create a `local.env` file inside `app/` directory, following `local.env.example` pattern
+1. Apply migrations: `python src/manage.py migrate`
+1. Create an admin user: `python src/manage.py createsuperuser`
+1. Run the development server: `python src/manage.py runserver`
+1. Access the Admin Dashboard at: `localhost:8000/admin`
+1. Access the API docs at: `localhost:8000/api/docs`
+
+### About tests
+
+1. We use pytest
+1. Go to `src/` directory and execute `python -m pytest`
+1. When creating new ones, place them inside a `tests.py` file and start each method  with `test_`
+1. Use pytest-django fixtures
+
 ### Code-style
 
 1. Run `flake8` before pushing changes, we use 100-char-limit per line:  
