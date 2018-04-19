@@ -6,6 +6,10 @@ from .serializers import ArticleSerializer
 
 
 class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    list:
+    Return a list of all published articles ordered by date.
+    """
     serializer_class = ArticleSerializer
 
     def get_queryset(self):

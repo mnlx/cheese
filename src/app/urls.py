@@ -17,13 +17,26 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
 
 from articles import urls as articles_urls
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="CKL News API",
+      default_version='v1',
+   ),
+   public=True,
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(articles_urls)),
+
+    path('api/docs/', schema_view.with_ui('redoc', cache_timeout=None), name='schema-redoc'),
 ]
 
 
