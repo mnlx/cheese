@@ -13,4 +13,4 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ArticleSerializer
 
     def get_queryset(self):
-        return Article.objects.filter(publish_date__lt=timezone.now()).order_by('-publish_date')
+        return Article.objects.filter(created__lt=timezone.now()).order_by('-publish_date')
