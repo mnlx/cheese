@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django_extensions.db.fields import AutoSlugField
 from django_extensions.db.models import TimeStampedModel
+from users.models import User
 
 
 def get_timestamp_path(root, filename):
@@ -62,3 +63,21 @@ class Article(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+
+class ArticleLikes(models.Model):
+    user = models.ForeignKey(
+        User,
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+    article = models.ForeignKey(
+        Article,
+        blank=False,
+        null=False,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.article

@@ -111,6 +111,12 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 MEDIA_URL = 'media/'
 
+# REST Framework settings
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE' : 100
+}
+
 # Email settings
 
 if DEBUG:
