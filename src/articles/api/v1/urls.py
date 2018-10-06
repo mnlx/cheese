@@ -20,9 +20,9 @@ urlpatterns = [
     ),
     path(
         r'article/likes/', ArticleLikesListViewSet.as_view({
-        'get': 'list',
-        'post': 'create'
-        }),
+            'get': 'list',
+            'post': 'create'
+            }),
         name='article-list'
     ),
 ]

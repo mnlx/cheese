@@ -65,7 +65,7 @@ class Article(TimeStampedModel):
         return self.title
 
 
-class ArticleLikes(models.Model):
+class ArticleLikes(TimeStampedModel):
     user = models.ForeignKey(
         User,
         blank=False,
@@ -80,4 +80,4 @@ class ArticleLikes(models.Model):
     )
 
     def __str__(self):
-        return self.article
+        return f'Article:{self.article.title}, User:{self.user.first_name}'
