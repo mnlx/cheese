@@ -44,6 +44,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = AuthorSerializer()
     category = CategorySerializer()
     likes_count = SerializerMethodField(read_only=True)
+    user_like_id = SerializerMethodField(read_only=True)
 
     class Meta:
         model = Article
@@ -55,12 +56,19 @@ class ArticleSerializer(serializers.ModelSerializer):
             'hero',
             'slug',
             'publish_date',
-            'likes_count'
+            'likes_count',
+            'user_like_id'
         )
 
 
     def get_likes_count(self,obj):
         return obj.articlelikes_set.count()
+
+    def get_user_like_id(self,obj):
+        request = self.context.get('request')
+        user_id = request.user.id
+        articles_like_result = obj.articlelikes_set.filter(user__pk=user_id)
+        return len(articles_like_result) and articles_like_result[0].pk
 
 
 
