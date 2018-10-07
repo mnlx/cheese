@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 from rest_framework.validators import UniqueTogetherValidator
-
 from articles.models import Article, Author, Category, ArticleLikes
 
 
@@ -59,7 +58,6 @@ class ArticleSerializer(serializers.ModelSerializer):
             'likes_count',
             'user_like_id'
         )
-
 
     def get_likes_count(self,obj):
         return obj.articlelikes_set.count()
