@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 from rest_framework.validators import UniqueTogetherValidator
-from articles.models import Article, Author, Category, ArticleLikes
+from articles.models import Article, Author, Category, ArticleLike
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -25,14 +25,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ArticleLikesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ArticleLikes
+        model = ArticleLike
         fields = (
             'user',
             'article'
         )
         validators = [
             UniqueTogetherValidator(
-                queryset=ArticleLikes.objects.all(),
+                queryset=ArticleLike.objects.all(),
                 fields=('user', 'article'),
                 message='User and article pair is not unique.'
             )

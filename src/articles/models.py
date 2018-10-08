@@ -64,7 +64,7 @@ class Article(TimeStampedModel):
         return self.title
 
 
-class ArticleLikes(TimeStampedModel):
+class ArticleLike(TimeStampedModel):
     user = models.ForeignKey(
         User,
         blank=False,

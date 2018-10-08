@@ -1,5 +1,5 @@
 from rest_framework import viewsets, mixins
-from articles.models import Article, ArticleLikes
+from articles.models import Article, ArticleLike
 from rest_framework.pagination import LimitOffsetPagination
 from django.http import JsonResponse
 from .serializers import ArticleSerializer, ArticleLikesSerializer
@@ -49,16 +49,16 @@ class ArticleLikesListViewSet(viewsets.ModelViewSet):
             ['user__pk', 'article__pk'][i]: val for i, val in enumerate([user, article]) if val
         }
         if user or article:
-            return ArticleLikes.objects.filter(**filter)
+            return ArticleLike.objects.filter(**filter)
         else:
-            return ArticleLikes.objects.all()
+            return ArticleLike.objects.all()
 
     def destroy(self, request, *args, **kwargs):
         query_params = request.query_params
         user = 'user' in query_params and query_params['user']
         article = 'article' in query_params and query_params['article']
         if user and article:
-            query_result = ArticleLikes.objects.filter(user__pk=user, article__pk=article)
+            query_result = ArticleLike.objects.filter(user__pk=user, article__pk=article)
             if len(query_result):
                 query_result.delete()
                 return JsonResponse({'result': 'record deleted'})
