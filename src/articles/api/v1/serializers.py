@@ -60,10 +60,10 @@ class ArticleSerializer(serializers.ModelSerializer):
         )
 
     def get_likes_count(self, obj):
-        return obj.articlelikes_set.count()
+        return obj.articlelike_set.count()
 
     def get_user_like(self, obj):
         request = self.context.get('request')
         user_id = request.user.id
-        articles_like_result = obj.articlelikes_set.filter(user__pk=user_id)
+        articles_like_result = obj.articlelike_set.filter(user__pk=user_id)
         return len(articles_like_result)
