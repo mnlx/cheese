@@ -23,7 +23,7 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                     SELECT  * FROM articles_article a
                     LEFT JOIN (
                         SELECT article_id, COUNT(*) as likes
-                        FROM articles_articlelikes
+                        FROM articles_articlelike
                         WHERE created > NOW() - INTERVAL '72' HOUR
                         GROUP BY article_id ) likes ON likes.article_id=a.id
                     ORDER BY likes IS NOT NULL DESC, likes DESC, publish_date DESC
@@ -32,8 +32,15 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         else:
             return Article.objects.all()
 
+class ArticleLikeDetailsViewSet(viewsets.ModelViewSet):
+    """
+    details:
+    Returns the specific ArticleLikes model according to the id in the URI
+    """
+    serializer_class = ArticleLikesSerializer
+    queryset = ArticleLike.objects.all()
 
-class ArticleLikesListViewSet(viewsets.ModelViewSet):
+class ArticleLikeListViewSet(viewsets.ModelViewSet):
     """
     list:
     Returns a list of the ArticleLikes model filtered by URI queries
@@ -53,16 +60,3 @@ class ArticleLikesListViewSet(viewsets.ModelViewSet):
         else:
             return ArticleLike.objects.all()
 
-    def destroy(self, request, *args, **kwargs):
-        query_params = request.query_params
-        user = 'user' in query_params and query_params['user']
-        article = 'article' in query_params and query_params['article']
-        if user and article:
-            query_result = ArticleLike.objects.filter(user__pk=user, article__pk=article)
-            if len(query_result):
-                query_result.delete()
-                return JsonResponse({'result': 'record deleted'})
-            else:
-                return JsonResponse({'error': 'Article and user combination not found.'})
-        else:
-            return JsonResponse({'error': 'Please specify correct query parameters.'})
