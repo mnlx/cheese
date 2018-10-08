@@ -20,13 +20,13 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         filter = 'filter' in query_params and query_params['filter']
         if filter == 'homepage':
             query = '''
-                    SELECT  * FROM articles_article a 
+                    SELECT  * FROM articles_article a
                     LEFT JOIN (
-                        SELECT article_id, COUNT(*) as likes 
-                        FROM articles_articlelikes 
-                        WHERE created > NOW() - INTERVAL '72' HOUR 
-                        GROUP BY article_id ) likes ON likes.article_id=a.id 
-                    ORDER BY likes IS NOT NULL DESC, likes DESC, publish_date DESC 
+                        SELECT article_id, COUNT(*) as likes
+                        FROM articles_articlelikes
+                        WHERE created > NOW() - INTERVAL '72' HOUR
+                        GROUP BY article_id ) likes ON likes.article_id=a.id
+                    ORDER BY likes IS NOT NULL DESC, likes DESC, publish_date DESC
                     '''
             return list(Article.objects.raw(query))
         else:
@@ -43,28 +43,26 @@ class ArticleLikesListViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         query_params = self.request.query_params
-        user= 'user' in  query_params and query_params['user']
+        user = 'user' in query_params and query_params['user']
         article = 'article' in query_params and query_params['article']
-        filter = {['user__pk', 'article__pk'][i] : val for i,val in enumerate([user, article]) if val}
-        if user or article :
+        filter = {
+            ['user__pk', 'article__pk'][i]: val for i, val in enumerate([user, article]) if val
+        }
+        if user or article:
             return ArticleLikes.objects.filter(**filter)
         else:
             return ArticleLikes.objects.all()
 
     def destroy(self, request, *args, **kwargs):
         query_params = request.query_params
-        user= 'user' in  query_params and query_params['user']
+        user = 'user' in query_params and query_params['user']
         article = 'article' in query_params and query_params['article']
         if user and article:
-            query_result= ArticleLikes.objects.filter(user__pk=user, article__pk=article)
+            query_result = ArticleLikes.objects.filter(user__pk=user, article__pk=article)
             if len(query_result):
                 query_result.delete()
-                return JsonResponse({'result':'record deleted'})
+                return JsonResponse({'result': 'record deleted'})
             else:
-                return JsonResponse({'error':'Article and user combination not found.'})
+                return JsonResponse({'error': 'Article and user combination not found.'})
         else:
             return JsonResponse({'error': 'Please specify correct query parameters.'})
-
-
-
-

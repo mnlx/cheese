@@ -114,7 +114,7 @@ MEDIA_URL = 'media/'
 # REST Framework settings
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE' : 100
+    'PAGE_SIZE': 100
 }
 
 # Email settings
