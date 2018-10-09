@@ -32,6 +32,7 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         else:
             return Article.objects.filter(created__lt=timezone.now()).order_by('-publish_date')
 
+
 class ArticleLikeDetailsViewSet(viewsets.ModelViewSet):
     """
     details:
@@ -39,6 +40,7 @@ class ArticleLikeDetailsViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ArticleLikesSerializer
     queryset = ArticleLike.objects.all()
+
 
 class ArticleLikeListViewSet(viewsets.ModelViewSet):
     """
@@ -59,4 +61,3 @@ class ArticleLikeListViewSet(viewsets.ModelViewSet):
             return ArticleLike.objects.filter(**filter)
         else:
             return ArticleLike.objects.all()
-
