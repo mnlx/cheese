@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins
 from articles.models import Article, ArticleLike
 from rest_framework.pagination import LimitOffsetPagination
-from django.http import JsonResponse
 from .serializers import ArticleSerializer, ArticleLikesSerializer
+from django.utils import timezone
 
 
 class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -30,7 +30,7 @@ class ArticleViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                     '''
             return list(Article.objects.raw(query))
         else:
-            return Article.objects.all()
+            return Article.objects.filter(created__lt=timezone.now()).order_by('-publish_date')
 
 class ArticleLikeDetailsViewSet(viewsets.ModelViewSet):
     """
